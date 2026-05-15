@@ -1,6 +1,6 @@
 {
     "name": "@gnsx/three-types",
-    "version": "0.184.1",
+    "version": "0.184.2",
     "types": "index.d.ts",
     "repository": {
         "type": "git",
