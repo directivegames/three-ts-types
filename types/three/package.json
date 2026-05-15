@@ -1,6 +1,10 @@
 {
     "name": "@gnsx/three-types",
     "version": "0.184.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/directivegames/three-ts-types"
+    },
     "projects": [
         "https://threejs.org/"
     ],
