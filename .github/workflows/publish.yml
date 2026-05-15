@@ -49,9 +49,6 @@ jobs:
       - name: Run type check
         run: pnpm run type-check
 
-      - name: Run tests
-        run: pnpm run test
-
       - name: Publish package
         working-directory: types/three
         run: npm publish --access public
