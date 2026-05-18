@@ -114,8 +114,8 @@ importers:
         specifier: ^3.8.1
         version: 3.8.1
       three:
-        specifier: file:../three.js
-        version: file:three.js
+        specifier: file:../../three.js
+        version: '@gnsx/three@file:../three.js'
       typescript:
         specifier: latest
         version: 6.0.2
@@ -494,6 +494,9 @@ packages:
   '@gar/promise-retry@1.0.3':
     resolution: {integrity: sha512-GmzA9ckNokPypTg10pgpeHNQe7ph+iIKKmhKu3Ob9ANkswreCx7R3cKmY781K8QK3AqVL3xVh9A42JvIAbkkSA==}
     engines: {node: ^20.17.0 || >=22.9.0}
+
+  '@gnsx/three@file:../three.js':
+    resolution: {directory: ../three.js, type: directory}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -2310,9 +2313,6 @@ packages:
   three@0.184.0:
     resolution: {integrity: sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==}
 
-  three@file:three.js:
-    resolution: {directory: three.js, type: directory}
-
   tinybench@2.9.0:
     resolution: {integrity: sha512-0+DUvqWMValLmha6lr4kD8iAMK1HzV0/aKnCtWb9v9641TnP/MFb7Pc2bxoxQjTXAErryXVgUOfv2YqNllqGeg==}
 
@@ -2409,6 +2409,11 @@ packages:
 
   typescript@6.0.2:
     resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -2744,7 +2749,7 @@ snapshots:
       typescript-5.7: typescript@5.7.3
       typescript-5.8: typescript@5.8.3
       typescript-5.9: typescript@5.9.3
-      typescript-6.0: typescript@6.0.2
+      typescript-6.0: typescript@6.0.3
 
   '@definitelytyped/typescript-versions@0.1.11': {}
 
@@ -2913,6 +2918,8 @@ snapshots:
   '@eslint/js@8.57.1': {}
 
   '@gar/promise-retry@1.0.3': {}
+
+  '@gnsx/three@file:../three.js': {}
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
@@ -5008,8 +5015,6 @@ snapshots:
 
   three@0.184.0: {}
 
-  three@file:three.js: {}
-
   tinybench@2.9.0: {}
 
   tinyexec@1.0.2: {}
@@ -5098,6 +5103,8 @@ snapshots:
   typescript@5.9.3: {}
 
   typescript@6.0.2: {}
+
+  typescript@6.0.3: {}
 
   unbox-primitive@1.1.0:
     dependencies:

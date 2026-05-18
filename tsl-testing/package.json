@@ -18,7 +18,7 @@
         "@vitest/browser-playwright": "^4.1.2",
         "playwright": "^1.59.1",
         "prettier": "^3.8.1",
-        "three": "file:../three.js",
+        "three": "file:../../three.js",
         "typescript": "latest",
         "vitest": "^4.1.2"
     }
