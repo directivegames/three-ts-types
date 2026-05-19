@@ -44,7 +44,7 @@ jobs:
           echo "package_name=$(node -p "require('./package.json').name")" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --filter=!tsl-testing
 
       - name: Run type check
         run: pnpm run type-check
