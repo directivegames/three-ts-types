@@ -43,4 +43,15 @@ declare class LightsNode extends Node {
 
 export default LightsNode;
 
+// WITH_GENESYS
+export class MaterialLightsNode extends LightsNode {
+    lightsNode: LightsNode | null;
+    materialLights: LightingNode[] | null;
+
+    constructor(lightsNode: LightsNode, materialLights?: LightingNode[]);
+
+    dispose(): void;
+}
+// !WITH_GENESYS
+
 export const lights: (lights?: Light[]) => LightsNode;
