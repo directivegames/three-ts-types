@@ -28,8 +28,11 @@ declare class LightProbeGrid extends Object3D {
 
     getProbePosition(ix: number, iy: number, iz: number, target: Vector3): Vector3;
     updateBoundingBox(): void;
-    bake(renderer: WebGLRenderer, scene: Scene, options?: LightProbeGridBakeOptions): void;
-    bake(renderer: WebGPURenderer, scene: Scene, options?: LightProbeGridBakeOptions): Promise<void>;
+    bake(
+        renderer: WebGLRenderer | WebGPURenderer,
+        scene: Scene,
+        options?: LightProbeGridBakeOptions,
+    ): Promise<void>;
     dispose(): void;
 }
 
