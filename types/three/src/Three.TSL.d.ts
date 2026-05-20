@@ -202,6 +202,10 @@ export const getCurrentStack: typeof TSL.getCurrentStack;
 export const getDirection: typeof TSL.getDirection;
 export const getDistanceAttenuation: typeof TSL.getDistanceAttenuation;
 export const getGeometryRoughness: typeof TSL.getGeometryRoughness;
+// WITH_GENESYS
+export const getLightProbeGridIrradiance: typeof TSL.getLightProbeGridIrradiance;
+export const getLightProbeGridIrradianceAtUV: typeof TSL.getLightProbeGridIrradianceAtUV;
+// !WITH_GENESYS
 export const getNormalFromDepth: typeof TSL.getNormalFromDepth;
 export const interleavedGradientNoise: typeof TSL.interleavedGradientNoise;
 export const vogelDiskSample: typeof TSL.vogelDiskSample;

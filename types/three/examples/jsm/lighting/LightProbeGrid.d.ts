@@ -1,4 +1,5 @@
 import { Box3, Data3DTexture, Object3D, Scene, Vector3, WebGLRenderer } from "three";
+import { WebGPURenderer } from "three/webgpu";
 
 export interface LightProbeGridBakeOptions {
     cubemapSize?: number | undefined;
@@ -28,6 +29,7 @@ declare class LightProbeGrid extends Object3D {
     getProbePosition(ix: number, iy: number, iz: number, target: Vector3): Vector3;
     updateBoundingBox(): void;
     bake(renderer: WebGLRenderer, scene: Scene, options?: LightProbeGridBakeOptions): void;
+    bake(renderer: WebGPURenderer, scene: Scene, options?: LightProbeGridBakeOptions): Promise<void>;
     dispose(): void;
 }
 

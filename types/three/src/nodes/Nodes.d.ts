@@ -127,6 +127,9 @@ export { default as IESSpotLightNode } from "./lighting/IESSpotLightNode.js";
 export { default as IrradianceNode } from "./lighting/IrradianceNode.js";
 export { default as LightingContextNode, LightingContext } from "./lighting/LightingContextNode.js";
 export { default as LightingNode } from "./lighting/LightingNode.js";
+// WITH_GENESYS
+export { default as LightProbeGridNode } from "./lighting/LightProbeGridNode.js";
+// !WITH_GENESYS
 export { default as LightProbeNode } from "./lighting/LightProbeNode.js";
 export { default as LightsNode } from "./lighting/LightsNode.js";
 // WITH_GENESYS

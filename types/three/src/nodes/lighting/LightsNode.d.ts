@@ -1,3 +1,4 @@
+import { Object3D } from "../../core/Object3D.js";
 import { Light } from "../../lights/Light.js";
 import Node from "../core/Node.js";
 import { NodeBuilder } from "../Nodes.js";
@@ -35,6 +36,10 @@ declare class LightsNode extends Node {
     getLightNodes(): LightingNode[];
 
     setLights(lights: Light[]): this;
+
+    // WITH_GENESYS
+    setLightProbeGrids(lightProbeGrids: Object3D[]): this;
+    // !WITH_GENESYS
 
     getLights(): Light[];
 
