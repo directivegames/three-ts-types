@@ -1167,6 +1167,12 @@ declare class Renderer {
      */
     dispose(): void;
     /**
+     * Releases renderer resources scoped to a scene when the scene is removed but
+     * this renderer instance continues to run. Does not dispose
+     * {@link Scene.background} or {@link Scene.environment} textures.
+     */
+    disposeSceneResources(scene: Scene): void;
+    /**
      * Sets the given render target. Calling this method means the renderer does not
      * target the default framebuffer (meaning the canvas) anymore but a custom framebuffer.
      * Use `null` as the first argument to reset the state.
