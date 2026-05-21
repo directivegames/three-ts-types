@@ -1,10 +1,11 @@
-import { Box3, Data3DTexture, Object3D, Scene, Vector3, WebGLRenderer } from "three";
+import { Box3, CubeTexture, Data3DTexture, Object3D, Scene, Vector3, WebGLRenderer } from "three";
 import { WebGPURenderer } from "three/webgpu";
 
 export interface LightProbeGridBakeOptions {
     cubemapSize?: number | undefined;
     near?: number | undefined;
     far?: number | undefined;
+    retainCubemaps?: boolean | undefined;
 }
 
 declare class LightProbeGrid extends Object3D {
@@ -16,6 +17,7 @@ declare class LightProbeGrid extends Object3D {
     resolution: Vector3;
     boundingBox: Box3;
     texture: Data3DTexture | null;
+    cubeTextures: CubeTexture[] | null;
 
     constructor(
         width?: number,
@@ -33,6 +35,7 @@ declare class LightProbeGrid extends Object3D {
         scene: Scene,
         options?: LightProbeGridBakeOptions,
     ): Promise<void>;
+    disposeRetainedCubemaps(): void;
     dispose(): void;
 }
 
