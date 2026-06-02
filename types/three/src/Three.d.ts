@@ -45,3 +45,12 @@ export type {
     WebXRManager,
     WebXRManagerEventMap,
 } from "./renderers/webxr/WebXRManager.js";
+// WITH_GENESYS
+export { ProfilerService, profile, profileClass } from "./profiler/ProfilerService.js";
+export type {
+    ChromeTrace,
+    ChromeTraceEvent,
+    ProfilerStats,
+    ProfilingProfile,
+} from "./profiler/ProfilerService.js";
+// !WITH_GENESYS
