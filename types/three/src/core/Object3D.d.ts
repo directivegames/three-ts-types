@@ -26,6 +26,9 @@ export interface Object3DJSONObject {
     castShadow?: boolean;
     receiveShadow?: boolean;
     visible?: boolean;
+    // WITH_GENESYS
+    selfHidden?: boolean;
+    // !WITH_GENESYS
     frustumCulled?: boolean;
     renderOrder?: number;
     static?: boolean;
@@ -233,6 +236,15 @@ export class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> ext
      * @defaultValue `true`
      */
     visible: boolean;
+
+    // WITH_GENESYS
+    /**
+     * When set to `true`, this object itself is hidden.
+     * Doesn't affect the visibility of the children.
+     * @defaultValue `false`
+     */
+    selfHidden: boolean;
+    // !WITH_GENESYS
 
     /**
      * Whether the object gets rendered into shadow map.
