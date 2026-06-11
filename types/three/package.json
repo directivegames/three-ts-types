@@ -1,6 +1,6 @@
 {
     "name": "@gnsx/three-types",
-    "version": "0.184.8",
+    "version": "0.184.9",
     "projects": [
         "https://threejs.org/"
     ],
