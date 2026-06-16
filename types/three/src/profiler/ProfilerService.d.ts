@@ -8,6 +8,15 @@ export interface ProfilerStats {
     p95: number;
     /** Percentage of a 60 fps frame budget (16.67 ms) */
     frameBudget: number;
+    /** Total (uncapped) call count since last reset, for calls-per-frame computation. */
+    totalInvocations: number;
+    /** Exclusive (self) avg ms — inclusive time minus child scope time. */
+    selfAvg?: number;
+    selfMin?: number;
+    selfMax?: number;
+    selfP95?: number;
+    /** Exclusive time as percentage of a 60 fps frame budget. */
+    selfFrameBudget?: number;
 }
 
 /** Chrome Trace Event Format — compatible with Speedscope and Perfetto. */
