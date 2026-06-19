@@ -68,6 +68,20 @@ export declare function profile(
     descriptor: PropertyDescriptor,
 ): PropertyDescriptor;
 
+export declare function profile(
+    customTag: string,
+): (
+    target: object,
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor,
+) => PropertyDescriptor;
+
+export declare function profile(): (
+    target: object,
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor,
+) => PropertyDescriptor;
+
 export declare function profileClass<T extends abstract new (...args: unknown[]) => object>(
     constructor: T,
 ): T;
