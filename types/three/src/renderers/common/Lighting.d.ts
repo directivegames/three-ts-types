@@ -1,6 +1,8 @@
 import { Light } from "../../lights/Light.js";
 import { LightsNode, MaterialLightsNode } from "../../nodes/Nodes.js";
-import { LightingNode } from "../../nodes/lighting/LightingNode.js";
+// WITH_GENESYS
+import LightingNode from "../../nodes/lighting/LightingNode.js";
+// !WITH_GENESYS
 import { Scene } from "../../scenes/Scene.js";
 
 /**
