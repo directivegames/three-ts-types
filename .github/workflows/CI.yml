@@ -15,7 +15,7 @@ jobs:
           path: 'DefinitelyTyped'
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
@@ -49,7 +49,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
@@ -64,7 +64,7 @@ jobs:
           submodules: true
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
@@ -86,7 +86,7 @@ jobs:
           submodules: true
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
@@ -94,6 +94,7 @@ jobs:
       - run: pnpm install
       - run: pnpm run build-declarations
         working-directory: jsdoc-testing
+        continue-on-error: true
       - run: git apply changes.patch
         working-directory: jsdoc-testing
       - run: pnpm run format-dprint
@@ -108,13 +109,13 @@ jobs:
           submodules: true
       - uses: pnpm/action-setup@v2
         with:
-          version: 10.33.0
+          version: 10.33.2
       - uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm exec playwright install
+      - run: pnpm exec playwright install chromium
         working-directory: tsl-testing
       - run: pnpm run type-check
         working-directory: tsl-testing

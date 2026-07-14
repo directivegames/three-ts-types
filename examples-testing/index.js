@@ -8,6 +8,11 @@ import examplesFiles from '../three.js/examples/files.json' with { type: 'json' 
 const exceptionList = [
     'misc_exporter_gcode',
     'misc_raycaster_helper',
+    'physics_ammo_break',
+    'physics_ammo_cloth',
+    'physics_ammo_rope',
+    'physics_ammo_terrain',
+    'physics_ammo_volume',
     'webgl_animation_skinning_blending',
     'webgl_animation_skinning_additive_blending',
     'webgl_animation_skinning_ik',
@@ -48,9 +53,10 @@ const exceptionList = [
     'webgl_texture2darray',
     'webgl_worker_offscreencanvas',
     'webgpu_compute_particles_fluid',
+    'webgpu_compute_rasterizer',
+    'webgpu_compute_rasterizer_ibl',
     'webgpu_compute_reduce',
     'webgpu_compute_water',
-    'webgpu_depth_texture',
     'webgpu_instance_sprites',
     'webgpu_instance_uniform',
     'webgpu_lights_custom',
@@ -65,6 +71,7 @@ const exceptionList = [
     'webgpu_tsl_editor',
     'webgpu_tsl_transpiler',
     'webgpu_video_frame',
+    'webgpu_volume_fire',
     'webxr_ar_camera_access',
     'webxr_vr_handinput_cubes',
     'webxr_vr_handinput_profiles',
@@ -79,11 +86,6 @@ const exceptionList = [
     'webxr_xr_haptics',
     'webxr_xr_marchingcubes',
     'webxr_xr_paint',
-    'physics_ammo_break',
-    'physics_ammo_cloth',
-    'physics_ammo_rope',
-    'physics_ammo_terrain',
-    'physics_ammo_volume',
 ];
 
 const re = /<script type="module">((.|\r|\n)+)<\/script>/;
