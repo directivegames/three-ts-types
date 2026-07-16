@@ -26,4 +26,10 @@ export default abstract class Backend {
     abstract get coordinateSystem(): CoordinateSystem;
 
     getDomElement(): HTMLCanvasElement | OffscreenCanvas;
+
+    // WITH_GENESYS
+    addTimestampQueryListener(listener: (type: string, uid: string, label: string | null) => void): void;
+    removeTimestampQueryListener(listener: (type: string, uid: string, label: string | null) => void): void;
+    notifyTimestampQuery(type: string, uid: string, label?: string | null): void;
+    // !WITH_GENESYS
 }
