@@ -29,6 +29,7 @@ export default abstract class Backend {
 
     // WITH_GENESYS
     addTimestampQueryListener(listener: (type: string, uid: string, label: string | null) => void): void;
+    getTimestampRange(uid: string): { start: bigint; end: bigint } | null;
     removeTimestampQueryListener(listener: (type: string, uid: string, label: string | null) => void): void;
     notifyTimestampQuery(type: string, uid: string, label?: string | null): void;
     // !WITH_GENESYS
