@@ -3,10 +3,18 @@ import { Camera, Node, TempNode, TextureNode, UniformNode, Vector2 } from "three
 declare class GTAONode extends TempNode<"float"> {
     depthNode: Node;
     normalNode: Node;
+    // WITH_GENESYS
+    /** Optional center-pixel validity node, sampled once before GTAO ray marching. */
+    validityNode: Node | null;
+    // !WITH_GENESYS
 
     resolutionScale: number;
 
     radius: UniformNode<"float", number>;
+    // WITH_GENESYS
+    /** Max projected AO radius in pixels; clamps near-camera sample stride. */
+    maxScreenRadius: UniformNode<"float", number>;
+    // !WITH_GENESYS
     resolution: UniformNode<"vec2", Vector2>;
     thickness: UniformNode<"float", number>;
     distanceExponent: UniformNode<"float", number>;
