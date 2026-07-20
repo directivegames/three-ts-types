@@ -107,8 +107,14 @@ declare class ProfilerServiceClass {
     getGpuStats(label: string): GpuProfilerStats | null;
     getAllGpuStats(): GpuProfilerStats[];
     report(): void;
-    exportChromeTrace(): ChromeTrace;
-    downloadTrace(filename?: string): void;
+    /**
+     * @param minDurationMs Omit complete spans shorter than this duration (ms). Capture is unaffected.
+     */
+    exportChromeTrace(minDurationMs?: number): ChromeTrace;
+    /**
+     * @param minDurationMs Omit complete spans shorter than this duration (ms).
+     */
+    downloadTrace(filename?: string, minDurationMs?: number): void;
     exportJSON(): ProfilerStats[];
     exportGpuJSON(): GpuProfilerStats[];
     reset(): void;
