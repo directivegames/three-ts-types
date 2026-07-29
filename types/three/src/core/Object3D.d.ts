@@ -17,6 +17,10 @@ import { BufferGeometry, BufferGeometryJSON } from "./BufferGeometry.js";
 import { EventDispatcher } from "./EventDispatcher.js";
 import { Layers } from "./Layers.js";
 import { Intersection, Raycaster } from "./Raycaster.js";
+// WITH_GENESYS
+import type { NodeId } from "./nodeId.js";
+import type { NodePath } from "./NodePath.js";
+// !WITH_GENESYS
 
 export interface Object3DJSONObject {
     uuid: string;
@@ -28,6 +32,7 @@ export interface Object3DJSONObject {
     visible?: boolean;
     // WITH_GENESYS
     selfHidden?: boolean;
+    nodeId?: number;
     // !WITH_GENESYS
     frustumCulled?: boolean;
     renderOrder?: number;
@@ -119,6 +124,14 @@ export class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> ext
      * @remarks This gets automatically assigned and shouldn't be edited.
      */
     uuid: string;
+
+    // WITH_GENESYS
+    /**
+     * Sibling-local 16-bit identity for scene-graph addressing ({@link NodePath}).
+     * `0` is valid. Reminted on parent attach when colliding with a sibling.
+     */
+    nodeId: NodeId;
+    // !WITH_GENESYS
 
     /**
      * Optional name of the object
@@ -575,6 +588,31 @@ export class Object3D<TEventMap extends Object3DEventMap = Object3DEventMap> ext
      * @param object
      */
     attach(object: Object3D): this;
+
+    // WITH_GENESYS
+    /** Assigns a {@link nodeId} when unset or outside the uint16 range. */
+    ensureNodeId(): NodeId;
+
+    /** Replaces {@link nodeId} with a newly generated value (e.g. prefab instance roots). */
+    remintNodeId(existingSiblingIds?: Iterable<NodeId>): NodeId;
+
+    /** Direct child with the given {@link nodeId}, or `null`. */
+    findChildByNodeId(id: NodeId): Object3D | null;
+
+    /** Resolves a path relative to this node. An empty path returns `this`. */
+    resolvePath(path: NodePath | string): Object3D | null;
+
+    /**
+     * Builds a {@link NodePath} for this node.
+     * - Without `root`: absolute path from the topmost non-Scene ancestor down to this node.
+     * - With `root`: path relative to `root` (empty when `this === root`); `null` when not under `root`.
+     */
+    getNodePath(root?: Object3D): NodePath | null;
+
+    /** Ensures every Object3D in this subtree has a valid {@link nodeId}, unique among its siblings. */
+    ensureNodeIdsInSubtree(): void;
+    // !WITH_GENESYS
+
 
     /**
      * Searches through an object and its children, starting with the object itself, and returns the first with a matching id.

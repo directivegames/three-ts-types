@@ -36,6 +36,10 @@ export * from "./core/InterleavedBuffer.js";
 export * from "./core/InterleavedBufferAttribute.js";
 export * from "./core/Layers.js";
 export * from "./core/Object3D.js";
+// WITH_GENESYS
+export * from "./core/NodePath.js";
+export * from "./core/nodeId.js";
+// !WITH_GENESYS
 export * from "./core/Raycaster.js";
 export * from "./core/RenderTarget.js";
 export * from "./core/RenderTarget3D.js";
@@ -112,6 +116,9 @@ export * from "./math/interpolants/LinearInterpolant.js";
 export * from "./math/interpolants/QuaternionLinearInterpolant.js";
 export * from "./math/Line3.js";
 export { MathUtils } from "./math/MathUtils.js";
+// WITH_GENESYS
+export * from "./math/XorShift32.js";
+// !WITH_GENESYS
 export * from "./math/Matrix2.js";
 export * from "./math/Matrix3.js";
 export * from "./math/Matrix4.js";
