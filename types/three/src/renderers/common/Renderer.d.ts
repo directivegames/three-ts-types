@@ -323,8 +323,9 @@ declare class Renderer {
      * @property {?Function} onNodeBuilderCreated - A callback function that is executed after a node builder has been created and before it is built.
      * @property {?Function} onShaderError - A callback function that is executed when a shader error happens. Only supported with WebGL 2 right now.
      * @property {Function} getShaderAsync - Allows the get the raw shader code for the given scene, camera and 3D object.
-     * @property {string} view - Debug view. `shaderComplexity` and `lightingComplexity` replace the shaded color with a heatmap.
+     * @property {string} view - Debug view. `shaderComplexity`, `lightingComplexity`, and `quadOverdraw` replace the shaded color with a heatmap.
      * @property {number} shaderComplexityBudget - Proxy budget that fills the shader-complexity ramp.
+     * @property {number} quadOverdrawBudget - Overlapping fragments that fill the quad-overdraw ramp.
      */
     /**
      * The renderer's debug configuration.
@@ -366,13 +367,17 @@ declare class Renderer {
         }>;
         // WITH_GENESYS
         /**
-         * - Debug view. `shaderComplexity` and `lightingComplexity` replace the shaded color with a heatmap.
+         * - Debug view. `shaderComplexity`, `lightingComplexity`, and `quadOverdraw` replace the shaded color with a heatmap.
          */
-        view: "none" | "shaderComplexity" | "lightingComplexity";
+        view: "none" | "shaderComplexity" | "lightingComplexity" | "quadOverdraw";
         /**
          * - Proxy budget that fills the shader-complexity ramp.
          */
         shaderComplexityBudget: number;
+        /**
+         * - Overlapping fragments that fill the quad-overdraw ramp.
+         */
+        quadOverdrawBudget: number;
         // !WITH_GENESYS
     };
     /**
