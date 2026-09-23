@@ -386,6 +386,16 @@ declare class NodeMaterial extends Material {
      * @return {Node<vec3>} The outgoing light node.
      */
     setupOutgoingLight(): Node;
+    // WITH_GENESYS
+    /**
+     * Static shader-complexity proxy for this material's lighting model.
+     * Fragment texture samples are counted later, while the shader is generated.
+     * Derived materials override this instead of registering a type flag.
+     *
+     * @return {number} The base cost, excluding texture samples.
+     */
+    getShaderComplexity(): number;
+    // !WITH_GENESYS
     /**
      * Setups the normal node from the material.
      *
