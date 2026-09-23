@@ -323,7 +323,7 @@ declare class Renderer {
      * @property {?Function} onNodeBuilderCreated - A callback function that is executed after a node builder has been created and before it is built.
      * @property {?Function} onShaderError - A callback function that is executed when a shader error happens. Only supported with WebGL 2 right now.
      * @property {Function} getShaderAsync - Allows the get the raw shader code for the given scene, camera and 3D object.
-     * @property {string} view - Debug view. `shaderComplexity`, `lightingComplexity`, and `quadOverdraw` replace the shaded color with a heatmap. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color.
+     * @property {string} view - Debug view. `shaderComplexity`, `lightingComplexity`, `quadOverdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color.
      * @property {string} buffer - Channel drawn by `bufferVisualization`: `baseColor`, `worldNormal`, `roughness`, `metallic`, `ambientOcclusion`, or `emissive`.
      * @property {number} shaderComplexityBudget - Proxy budget that fills the shader-complexity ramp.
      * @property {number} quadOverdrawBudget - Overlapping fragments that fill the quad-overdraw ramp.
@@ -368,9 +368,18 @@ declare class Renderer {
         }>;
         // WITH_GENESYS
         /**
-         * - Debug view. `shaderComplexity`, `lightingComplexity`, and `quadOverdraw` replace the shaded color with a heatmap. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color.
+         * - Debug view. `shaderComplexity`, `lightingComplexity`, `quadOverdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color.
          */
-        view: "none" | "shaderComplexity" | "lightingComplexity" | "quadOverdraw" | "bufferVisualization" | "lightingOnly" | "detailLighting" | "drawCall";
+        view:
+            | "none"
+            | "shaderComplexity"
+            | "lightingComplexity"
+            | "quadOverdraw"
+            | "shaderComplexityAndQuads"
+            | "bufferVisualization"
+            | "lightingOnly"
+            | "detailLighting"
+            | "drawCall";
         /**
          * - Channel drawn by `bufferVisualization`.
          */
