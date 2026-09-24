@@ -323,7 +323,9 @@ declare class Renderer {
      * @property {?Function} onNodeBuilderCreated - A callback function that is executed after a node builder has been created and before it is built.
      * @property {?Function} onShaderError - A callback function that is executed when a shader error happens. Only supported with WebGL 2 right now.
      * @property {Function} getShaderAsync - Allows the get the raw shader code for the given scene, camera and 3D object.
-     * @property {string} view - Debug view. `shaderComplexity`, `lightingComplexity`, `overdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color. `frontBackFace` draws both windings and tints the side facing the camera. `shadowCaster` lights a mesh green when it casts shadows and gray when it does not.
+     * @property {string} view - Debug view. `shaderComplexity`, `lightingComplexity`, `overdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color. `frontBackFace` draws both windings and tints the side facing the camera. `shadowCaster` lights a mesh green when it casts shadows and gray when it does not. `doubleSide` lights a single-sided surface gray, a visible double-sided back face blue, and a hidden double-sided back face red.
+     * @property {boolean} doubleSideHidden - Set while the double-side view draws hidden back faces. Not a view mode.
+     * @property {boolean} doubleSideBack - Set while the double-side view redraws a visible back face. Not a view mode.
      * @property {string} buffer - Channel drawn by `bufferVisualization`: `baseColor`, `worldNormal`, `roughness`, `metallic`, `ambientOcclusion`, or `emissive`.
      * @property {number} shaderComplexityBudget - Proxy budget that fills the shader-complexity ramp.
      * @property {number} quadOverdrawBudget - Overlapping fragments that fill the quad-overdraw ramp.
@@ -368,7 +370,7 @@ declare class Renderer {
         }>;
         // WITH_GENESYS
         /**
-         * - Debug view. `shaderComplexity`, `lightingComplexity`, `overdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color. `frontBackFace` draws both windings and tints the side facing the camera. `shadowCaster` lights a mesh green when it casts shadows and gray when it does not.
+         * - Debug view. `shaderComplexity`, `lightingComplexity`, `overdraw`, and `shaderComplexityAndQuads` replace the shaded color with a heatmap. `shaderComplexityAndQuads` multiplies the shader cost by the overdraw count. `bufferVisualization` shows one material channel. `lightingOnly` and `detailLighting` light a flat gray surface. `drawCall` lights each submitted draw with its own diffuse color. `frontBackFace` draws both windings and tints the side facing the camera. `shadowCaster` lights a mesh green when it casts shadows and gray when it does not. `doubleSide` lights a single-sided surface gray, a visible double-sided back face blue, and a hidden double-sided back face red.
          */
         view:
             | "none"
@@ -381,7 +383,16 @@ declare class Renderer {
             | "detailLighting"
             | "drawCall"
             | "frontBackFace"
-            | "shadowCaster";
+            | "shadowCaster"
+            | "doubleSide";
+        /**
+         * - Set while the double-side view draws hidden back faces. Not a view mode.
+         */
+        doubleSideHidden: boolean;
+        /**
+         * - Set while the double-side view redraws a visible back face. Not a view mode.
+         */
+        doubleSideBack: boolean;
         /**
          * - Channel drawn by `bufferVisualization`.
          */
