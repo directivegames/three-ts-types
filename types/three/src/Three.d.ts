@@ -48,6 +48,7 @@ export type {
 // WITH_GENESYS
 export { profile, profileClass, ProfilerService } from "./profiler/ProfilerService.js";
 export type {
+    BeginSpanOptions,
     ChromeTrace,
     ChromeTraceEvent,
     ChromeTraceMetadataEvent,

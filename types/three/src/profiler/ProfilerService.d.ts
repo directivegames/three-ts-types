@@ -4,21 +4,23 @@ import type { WebGLRenderer } from "../renderers/WebGLRenderer.js";
 
 export interface ProfilerStats {
     label: string;
+    /** Inclusive samples; recursive calls only contribute their outermost call. */
     samples: number;
     avg: number;
     min: number;
     max: number;
+    /** Nearest-rank 95th percentile. */
     p95: number;
-    /** Percentage of a 60 fps frame budget (16.67 ms) */
+    /** Average as a percentage of `frameBudgetMs` (one 60 fps frame by default). */
     frameBudget: number;
-    /** Total (uncapped) call count since last reset, for calls-per-frame computation. */
+    /** Total (uncapped) call count since last reset, recursive calls included. */
     totalInvocations: number;
     /** Exclusive (self) avg ms — inclusive time minus child scope time. */
     selfAvg?: number;
     selfMin?: number;
     selfMax?: number;
     selfP95?: number;
-    /** Exclusive time as percentage of a 60 fps frame budget. */
+    /** Exclusive average as a percentage of `frameBudgetMs`. */
     selfFrameBudget?: number;
 }
 
@@ -28,8 +30,9 @@ export interface GpuProfilerStats {
     avg: number;
     min: number;
     max: number;
+    /** Nearest-rank 95th percentile. */
     p95: number;
-    /** Percentage of a 60 fps frame budget (16.67 ms) */
+    /** Average as a percentage of `frameBudgetMs` (one 60 fps frame by default). */
     frameBudget: number;
     totalInvocations: number;
 }
@@ -38,7 +41,13 @@ export interface SpanHandle {
     label: string;
     t0: number;
     _seq: number;
-    _startMark?: string | undefined;
+    /** Session the span started in; handles from before `reset()` / `enable()` are ignored. */
+    _generation: number;
+}
+
+export interface BeginSpanOptions {
+    /** The span ends from an async continuation and does not take part in self-time nesting. */
+    asyncTimeline?: boolean | undefined;
 }
 
 export interface EndSpanOptions {
@@ -62,7 +71,8 @@ export interface ChromeTraceEvent {
     ts: number;
     dur: number;
     pid: 1;
-    tid: 1 | 2 | 3;
+    /** 1 main thread, 2 async promise lifetimes (overlapping ones on 101+ in exports), 3 GPU. */
+    tid: number;
     cat: "gnsx" | "gnsx-gpu";
 }
 
@@ -88,18 +98,29 @@ export interface ChromeTrace {
 export type ProfilingProfile = "full" | "stats";
 
 declare class ProfilerServiceClass {
-    begin: (label: string) => void;
+    /**
+     * @param label Stats key; keep it stable so samples aggregate.
+     * @param traceName Trace slice and User Timing name, defaulting to `label`. Can carry per-call
+     * context such as object names; build it only when {@link isTracing} is true.
+     */
+    begin: (label: string, traceName?: string) => void;
     end: (label: string) => void;
-    beginSpan: (label: string) => SpanHandle;
+    beginSpan: (label: string, options?: BeginSpanOptions) => SpanHandle;
     endSpan: (handle: SpanHandle, options?: EndSpanOptions) => void;
     beginGpu: (label: string, renderer: GpuProfilerRenderer) => GpuSpanHandle;
     endGpu: (handle: GpuSpanHandle) => void;
+    /** Trace events and User Timing measures kept per session in the `'full'` profile. */
+    maxTraceEvents: number;
+    /** Budget that `frameBudget` percentages are computed against (ms). Defaults to 1000 / 60. */
+    frameBudgetMs: number;
 
     setProfile(profile: ProfilingProfile): void;
     getProfile(): ProfilingProfile;
     enable(): void;
     disable(): void;
     isEnabled(): boolean;
+    /** Whether a trace is being recorded (enabled with the `'full'` profile). */
+    isTracing(): boolean;
     attachGpuRenderer(renderer: GpuProfilerRenderer): Promise<boolean>;
     flushGpu(renderer: GpuProfilerRenderer): Promise<void>;
     getStats(label: string): ProfilerStats | null;
