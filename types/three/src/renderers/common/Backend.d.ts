@@ -1,5 +1,8 @@
 import { CoordinateSystem } from "../../constants.js";
 import NodeBuilder from "../../nodes/core/NodeBuilder.js";
+// WITH_GENESYS
+import ComputeNode from "../../nodes/gpgpu/ComputeNode.js";
+// !WITH_GENESYS
 import Renderer from "./Renderer.js";
 
 declare module "../../core/Object3D.js" {
@@ -32,5 +35,6 @@ export default abstract class Backend {
     getTimestampRange(uid: string): { start: bigint; end: bigint } | null;
     removeTimestampQueryListener(listener: (type: string, uid: string, label: string | null) => void): void;
     notifyTimestampQuery(type: string, uid: string, label?: string | null): void;
+    getComputeProfilerLabel(computeGroup: ComputeNode | ComputeNode[]): string;
     // !WITH_GENESYS
 }
