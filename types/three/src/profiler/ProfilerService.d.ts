@@ -92,9 +92,39 @@ export interface ChromeTrace {
     traceEvents: Array<ChromeTraceEvent | ChromeTraceMetadataEvent>;
 }
 
+/** Uncapped session totals — unaffected by the stats ring buffer. */
+export interface SessionDurationStats {
+    count: number;
+    totalMs: number;
+    min: number;
+    max: number;
+}
+
+export interface SessionStats extends SessionDurationStats {
+    label: string;
+    /** Exclusive (self) session totals — inclusive time minus child scope time. */
+    selfCount?: number | undefined;
+    selfTotalMs?: number | undefined;
+    selfMin?: number | undefined;
+    selfMax?: number | undefined;
+}
+
+export interface GpuSessionStats extends SessionDurationStats {
+    label: string;
+}
+
+/**
+ * Receives complete trace slices instead of the trace buffer retaining them.
+ * `close` runs from {@link ProfilerServiceClass.disable} and when the sink is replaced.
+ */
+export interface TraceSink {
+    write(event: ChromeTraceEvent): void;
+    close?: (() => void) | undefined;
+}
+
 /**
  * `'full'`  — ring-buffer stats + trace event accumulation (downloadable via downloadTrace()).
- * `'stats'` — ring-buffer stats only; trace events are not accumulated (lower memory overhead).
+ * `'stats'` — ring-buffer stats. Trace events are emitted only while {@link ProfilerServiceClass.beginTraceCapture} is active.
  */
 export type ProfilingProfile = "full" | "stats";
 
@@ -124,10 +154,26 @@ declare class ProfilerServiceClass {
 
     setProfile(profile: ProfilingProfile): void;
     getProfile(): ProfilingProfile;
+    /**
+     * Route complete trace slices to `sink` instead of retaining them.
+     * May be called before or after {@link enable} / {@link beginTraceCapture}. {@link disable} closes the sink; {@link enable} and {@link reset} do not.
+     */
+    setTraceSink(sink: TraceSink | null): void;
+    /**
+     * Drop complete spans shorter than this from the trace. Discarded spans are not recoverable.
+     * `0` keeps every span. Stats and session totals still record them.
+     */
+    setTraceMinDurationMs(minDurationMs: number): void;
+    getTraceMinDurationMs(): number;
+    /** Start a fresh trace session without clearing bounded stats rings. Enables profiling if needed. */
+    beginTraceCapture(): void;
+    /** Stop trace emission while preserving bounded stats collection and completed trace data. */
+    endTraceCapture(): void;
+    isTraceCaptureEnabled(): boolean;
     enable(): void;
     disable(): void;
     isEnabled(): boolean;
-    /** Whether a trace is being recorded (enabled with the `'full'` profile). */
+    /** Whether a trace is being recorded (`'full'` profile, or trace capture on any profile). */
     isTracing(): boolean;
     /** Per-draw timing adds GPU overhead; use it to locate cost, not to measure frame time. */
     setGpuDetail(detail: GpuProfilingDetail): void;
@@ -144,6 +190,10 @@ declare class ProfilerServiceClass {
     getAllStats(): ProfilerStats[];
     getGpuStats(label: string): GpuProfilerStats | null;
     getAllGpuStats(): GpuProfilerStats[];
+    getSessionStats(label: string): SessionStats | null;
+    getAllSessionStats(): SessionStats[];
+    getGpuSessionStats(label: string): GpuSessionStats | null;
+    getAllGpuSessionStats(): GpuSessionStats[];
     report(): void;
     /**
      * @param minDurationMs Omit complete spans shorter than this duration (ms). Capture is unaffected.
