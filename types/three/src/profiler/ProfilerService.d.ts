@@ -98,6 +98,13 @@ export interface ChromeTrace {
  */
 export type ProfilingProfile = "full" | "stats";
 
+/**
+ * GPU timing inside render passes. `'pass'` times whole passes; `'stage'` adds opaque,
+ * transparent and bundle spans; `'draw'` also adds a span per draw. `'stage'` and `'draw'`
+ * need timestamps inside passes (see {@link ProfilerServiceClass.hasPassTimestamps}).
+ */
+export type GpuProfilingDetail = "pass" | "stage" | "draw";
+
 declare class ProfilerServiceClass {
     /**
      * @param label Stats key; keep it stable so samples aggregate.
@@ -122,6 +129,15 @@ declare class ProfilerServiceClass {
     isEnabled(): boolean;
     /** Whether a trace is being recorded (enabled with the `'full'` profile). */
     isTracing(): boolean;
+    /** Per-draw timing adds GPU overhead; use it to locate cost, not to measure frame time. */
+    setGpuDetail(detail: GpuProfilingDetail): void;
+    getGpuDetail(): GpuProfilingDetail;
+    /**
+     * Whether a renderer can time stages and draws inside passes. In Chrome this needs
+     * chrome://flags/#enable-unsafe-webgpu (or `--enable-unsafe-webgpu`). False until
+     * `renderer.init()` resolves.
+     */
+    hasPassTimestamps(renderer: GpuProfilerRenderer): boolean;
     attachGpuRenderer(renderer: GpuProfilerRenderer): Promise<boolean>;
     flushGpu(renderer: GpuProfilerRenderer): Promise<void>;
     getStats(label: string): ProfilerStats | null;

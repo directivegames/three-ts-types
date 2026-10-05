@@ -55,6 +55,7 @@ export type {
     EndSpanOptions,
     GpuProfilerRenderer,
     GpuProfilerStats,
+    GpuProfilingDetail,
     GpuSpanHandle,
     ProfilerStats,
     ProfilingProfile,
