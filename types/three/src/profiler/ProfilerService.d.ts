@@ -40,6 +40,7 @@ export interface GpuProfilerStats {
 export interface SpanHandle {
     label: string;
     t0: number;
+    /** `0` for a no-op handle and once the span has ended; `endSpan()` then does nothing. */
     _seq: number;
     /** Session the span started in; handles from before `reset()` / `enable()` are ignored. */
     _generation: number;
@@ -100,7 +101,7 @@ export type ProfilingProfile = "full" | "stats";
 declare class ProfilerServiceClass {
     /**
      * @param label Stats key; keep it stable so samples aggregate.
-     * @param traceName Trace slice and User Timing name, defaulting to `label`. Can carry per-call
+     * @param traceName Trace slice name, defaulting to `label`. Can carry per-call
      * context such as object names; build it only when {@link isTracing} is true.
      */
     begin: (label: string, traceName?: string) => void;
@@ -109,7 +110,7 @@ declare class ProfilerServiceClass {
     endSpan: (handle: SpanHandle, options?: EndSpanOptions) => void;
     beginGpu: (label: string, renderer: GpuProfilerRenderer) => GpuSpanHandle;
     endGpu: (handle: GpuSpanHandle) => void;
-    /** Trace events and User Timing measures kept per session in the `'full'` profile. */
+    /** Trace events kept per session in the `'full'` profile. */
     maxTraceEvents: number;
     /** Budget that `frameBudget` percentages are computed against (ms). Defaults to 1000 / 60. */
     frameBudgetMs: number;
