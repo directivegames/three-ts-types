@@ -18,6 +18,11 @@ export interface RenderTargetOptions extends TextureParameters {
      * @default 0
      */
     samples?: number | undefined;
+    /**
+     * Defines the number of color attachments. Must be at least `1`, except for WebGPU depth-only targets
+     * (e.g. PCF shadow maps) where `0` is allowed and {@link RenderTarget.texture} is then `undefined` at runtime.
+     * @default 1
+     */
     count?: number | undefined;
     depth?: number | undefined;
     multiview?: boolean | undefined;
@@ -140,6 +145,13 @@ export class RenderTarget<
 
     constructor(width?: number, height?: number, options?: RenderTargetOptions);
 
+    /**
+     * The first color attachment.
+     *
+     * Typed as always present. It is `undefined` at runtime only for WebGPU depth-only targets created with
+     * `count: 0`. Shadow maps are the only such targets; they are typed as `ShadowMapRenderTarget`
+     * (see `LightShadow.map`), where `texture` is optional.
+     */
     get texture(): TTexture;
     set texture(value: TTexture);
 

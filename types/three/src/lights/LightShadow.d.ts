@@ -2,12 +2,20 @@ import { Camera } from "../cameras/Camera.js";
 import { TextureDataType } from "../constants.js";
 import { Object3DJSONObject } from "../core/Object3D.js";
 import { RenderTarget } from "../core/RenderTarget.js";
+import { Texture } from "../textures/Texture.js";
 import { Frustum } from "../math/Frustum.js";
 import { Matrix4 } from "../math/Matrix4.js";
 import { Vector2, Vector2Tuple } from "../math/Vector2.js";
 import { Vector4 } from "../math/Vector4.js";
 import Node from "../nodes/core/Node.js";
 import { Light } from "./Light.js";
+
+/**
+ * The shadow map render target. With the WebGPU renderer, PCF and basic shadow maps are depth-only
+ * (`count: 0`), so there is no color attachment and `texture` is `undefined`. Sample
+ * `depthTexture` instead.
+ */
+export type ShadowMapRenderTarget = Omit<RenderTarget, "texture"> & { texture: Texture | undefined };
 
 export interface LightShadowJSON {
     intensity?: number;
@@ -105,7 +113,7 @@ export abstract class LightShadow<TCamera extends Camera = Camera> {
      *
      * @default null
      */
-    map: RenderTarget | null;
+    map: ShadowMapRenderTarget | null;
     /**
      * The distribution map generated using the internal camera; an occlusion is
      * calculated based on the distribution of depths. Computed internally during
