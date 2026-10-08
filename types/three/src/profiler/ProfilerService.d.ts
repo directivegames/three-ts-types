@@ -75,6 +75,11 @@ export interface ChromeTraceEvent {
     /** 1 main thread, 2 async promise lifetimes (overlapping ones on 101+ in exports), 3 GPU. */
     tid: number;
     cat: "gnsx" | "gnsx-gpu";
+    /**
+     * `depth` is the nesting depth when the slice was recorded. It breaks ties between slices with
+     * the same `ts` and `dur`, where overlap cannot say which encloses which.
+     */
+    args: { depth: number };
 }
 
 export interface ChromeTraceMetadataEvent {
