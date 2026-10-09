@@ -18,6 +18,12 @@ declare class RenderPipeline {
      * pipeline's quads while rendering, including ones created during the shader build, are added automatically.
      */
     ownedNodes: Set<Node>;
+
+    /**
+     * Name of the output quad, used as its profiler scope and GPU pass label.
+     * @default 'Render Pipeline'
+     */
+    name: string;
     // !WITH_GENESYS
 
     constructor(renderer: Renderer, outputNode?: Node);

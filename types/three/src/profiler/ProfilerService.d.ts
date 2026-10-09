@@ -59,6 +59,8 @@ export type GpuProfilerRenderer = Renderer | WebGLRenderer;
 
 export interface GpuSpanHandle {
     label: string;
+    /** Trace slice name when it differs from `label`. Can be set while the span is open. */
+    traceName?: string | null;
     renderer: GpuProfilerRenderer | null;
     t0: number;
     _seq: number;
@@ -150,7 +152,7 @@ declare class ProfilerServiceClass {
     end: (label: string) => void;
     beginSpan: (label: string, options?: BeginSpanOptions) => SpanHandle;
     endSpan: (handle: SpanHandle, options?: EndSpanOptions) => void;
-    beginGpu: (label: string, renderer: GpuProfilerRenderer) => GpuSpanHandle;
+    beginGpu: (label: string, renderer: GpuProfilerRenderer, traceName?: string) => GpuSpanHandle;
     endGpu: (handle: GpuSpanHandle) => void;
     /** Trace events kept per session in the `'full'` profile. */
     maxTraceEvents: number;
