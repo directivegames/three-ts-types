@@ -71,6 +71,14 @@ jobs:
             ARGS+=("$BUMP_TYPE")
           fi
           "$RUNNER_TEMP/bump-cli/node_modules/.bin/tsx" scripts/bump-package-version.ts "${ARGS[@]}"
+
+      # The DefinitelyTyped publisher adds the license when it generates @types/three; npm publish does not.
+      - name: Set package license
+        working-directory: types/three
+        run: |
+          set -euo pipefail
+          LICENSE_ID="$(node -p "require('../../package.json').license")"
+          npm pkg set "license=$LICENSE_ID"
       # !WITH_GENESYS
 
       - name: Run type check
