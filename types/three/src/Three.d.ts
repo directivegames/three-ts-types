@@ -46,7 +46,7 @@ export type {
     WebXRManagerEventMap,
 } from "./renderers/webxr/WebXRManager.js";
 // WITH_GENESYS
-export { profile, profileClass, ProfilerService } from "./profiler/ProfilerService.js";
+export { profile, profileBlock, profileGpuBlock, profileClass, ProfilerService } from "./profiler/ProfilerService.js";
 export type {
     BeginSpanOptions,
     ChromeTrace,

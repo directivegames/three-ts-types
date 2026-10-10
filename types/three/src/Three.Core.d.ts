@@ -181,5 +181,5 @@ export * from "./textures/VideoFrameTexture.js";
 export * from "./textures/VideoTexture.js";
 export { createCanvasElement, error, getConsoleFunction, log, setConsoleFunction, warn, warnOnce } from "./utils.js";
 // WITH_GENESYS
-export { ProfilerService, profile, profileClass } from "./profiler/ProfilerService.js";
+export { ProfilerService, profile, profileBlock, profileGpuBlock, profileClass } from "./profiler/ProfilerService.js";
 // !WITH_GENESYS

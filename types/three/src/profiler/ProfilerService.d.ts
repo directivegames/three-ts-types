@@ -217,6 +217,24 @@ declare class ProfilerServiceClass {
 
 export declare const ProfilerService: ProfilerServiceClass;
 
+/**
+ * Profiles a synchronous or async code block. A thenable is timed until it settles
+ * and recorded on the async lane. While profiling is disabled, `fn` runs directly.
+ */
+export declare function profileBlock<T>(label: string, fn: () => T): T;
+export declare function profileBlock<T>(label: string, fn: () => T, traceName: string | undefined): T;
+
+/**
+ * Profiles GPU work a block submits on `renderer`. While profiling is disabled, `fn` runs
+ * directly. A thenable result keeps the GPU span open until it settles.
+ */
+export declare function profileGpuBlock<T>(
+    label: string,
+    renderer: GpuProfilerRenderer,
+    fn: () => T,
+    traceName?: string,
+): T;
+
 export declare function profile(
     target: object,
     propertyKey: string | symbol,
